@@ -1,0 +1,21 @@
+{
+  "editor.wordWrap": "on",
+  "javascript.updateImportsOnFileMove.enabled": "never",
+  "git.enableSmartCommit": true,
+  "diffEditor.ignoreTrimWhitespace": true,
+  "[vue]": {
+    "editor.defaultFormatter": "Vue.volar"
+  },
+  "editor.detectIndentation": false,
+  "editor.insertSpaces": false,
+  "diffEditor.hideUnchangedRegions.enabled": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "always"
+  },
+  "eslint.validate": [
+    "javascript",
+    "typescript",
+    "vue"
+  ],
+  "css.lint.unknownAtRules": "ignore",
+}
