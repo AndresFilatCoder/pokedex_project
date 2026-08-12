@@ -1,9 +1,7 @@
 import useCustomFetch from '~/composables/common/fetching/useCustomFetch'
-import { useCustomToast } from '~/composables/common/toast/useCustomToast'
 
 export const usePokemon = () => {
   const $api = useCustomFetch()
-  const toast = useCustomToast()
 
   const getPokemonDetails = async (name: string) => {
     const { data, error } = await $api.get<PokemonDetails>(`/pokemon/${name.toLowerCase()}`)
@@ -18,10 +16,6 @@ export const usePokemon = () => {
     try {
       details = await getPokemonDetails(pokemon.name)
     } catch {
-      toast.add({
-        title: 'Error',
-        message: 'Failed to fetch Pokémon details'
-      })
       return { ...pokemon, details: null }
     }
 
@@ -44,12 +38,5 @@ export const usePokemon = () => {
     return data.value
   }
 
-  const getType = async (name: string) => {
-    const { data, error } = await $api.get<PokemonType>(`/type/${name}`)
-
-    if (error.value) throw error.value
-    return data.value || null
-  }
-
-  return { getPokemonList, getPokemonDetails, getType }
+  return { getPokemonList, getPokemonDetails }
 }
