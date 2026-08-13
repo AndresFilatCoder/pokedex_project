@@ -303,6 +303,17 @@ Revisión de animaciones y transiciones, accesibilidad (foco, `aria-label`, nave
 
 ---
 
+### Añadido posterior — sonido del Pokémon ✅
+
+Al montarse la página de detalle suena el grito del Pokémon, mediante `usePlayAudio`.
+
+- El campo `cries` de la PokeAPI trae `latest` y `legacy`; se usa `latest` y se recurre a `legacy` porque en varias formas falta uno de los dos. Si no hay ninguno, no suena.
+- `usePlayAudio` ignora el rechazo de `play()`: el navegador bloquea la reproducción automática cuando el usuario todavía no ha interactuado con la página, y sin capturarlo aparecería un error en consola al entrar al detalle por enlace directo.
+
+**Verificación en navegador:** al abrir el detalle de Charmander se crea un único audio con la url `.../cries/pokemon/latest/4.ogg` y se llama a `play()` una sola vez; el clip carga y avanza hasta 0,47 s de sus 0,72 s de duración.
+
+---
+
 ## 5. Registro de avance
 
 | Fase | Estado | Fecha | Notas |

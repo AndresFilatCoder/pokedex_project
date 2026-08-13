@@ -7,7 +7,9 @@ export const useDelay = (callback: () => void, delay: number) => {
 
 export const usePlayAudio = (audioUrl: string) => {
   const audio = new Audio(audioUrl)
-  audio.play()
+  // El navegador puede bloquear la reproducción si el usuario aún no ha
+  // interactuado con la página; en ese caso simplemente no suena.
+  audio.play().catch(() => undefined)
 }
 
 export const useClipboard = async (text: string) => {

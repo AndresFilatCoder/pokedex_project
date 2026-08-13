@@ -51,6 +51,12 @@ export interface PokemonAbilitySlot {
   ability: NamedApiResource
 }
 
+/** Sonidos que emite el Pokémon. `legacy` falta en varias formas. */
+export interface PokemonCries {
+  latest: string | null
+  legacy: string | null
+}
+
 export interface PokemonDetails {
   id: number
   name: string
@@ -59,6 +65,7 @@ export interface PokemonDetails {
   /** Hectogramos. */
   weight: number
   sprites: PokemonSprites
+  cries: PokemonCries
   types: PokemonTypeSlot[]
   abilities: PokemonAbilitySlot[]
   species: NamedApiResource
@@ -131,6 +138,8 @@ export interface PokemonDetailView extends PokemonSummary {
   height: number
   category: string
   ability: string
+  /** Sonido del Pokémon; `null` si la API no lo tiene. */
+  cry: string | null
   /** Porcentaje de hembras; `null` si la especie no tiene género. */
   femaleRatio: number | null
   weaknesses: PokemonTypeName[]

@@ -62,6 +62,7 @@ export const usePokemonDetail = () => {
         ability: ability
           ? getLocalizedName(ability.names, formatPokemonName(ability.name))
           : 'Desconocida',
+        cry: details.cries.latest ?? details.cries.legacy,
         femaleRatio: getFemaleRatio(species),
         weaknesses: getPokemonWeaknesses(typeDetails).filter(
           (type): type is PokemonTypeName => type in POKEMON_TYPE_LABELS

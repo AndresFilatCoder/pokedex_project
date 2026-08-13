@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { usePlayAudio } from '~/composables/common/utils'
 import { ROUTES } from '~/constants/routes'
 
 const route = useRoute()
@@ -18,7 +19,11 @@ const goBack = () => {
   return navigateTo(ROUTES.pokedex)
 }
 
-onMounted(() => loadPokemon(pokemonId.value))
+onMounted(async () => {
+  await loadPokemon(pokemonId.value)
+
+  if (pokemon.value?.cry) usePlayAudio(pokemon.value.cry)
+})
 </script>
 
 <template>
