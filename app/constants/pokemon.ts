@@ -63,6 +63,20 @@ export const POKEMON_TYPE_ICONS: Record<PokemonTypeName, string> = {
   shadow: 'i-uil-ban'
 }
 
+/**
+ * Corazón del botón de favoritos, en la caja 24x24 de Iconify.
+ *
+ * Ambos trazados salen del icono `uil:heart`: el primero es el original, cuyo
+ * contorno interior lo deja hueco, y el segundo conserva solo el contorno
+ * exterior para pintarlo relleno. Unicons no incluye la variante sólida, y así
+ * la silueta es idéntica en los dos estados.
+ */
+export const HEART_OUTLINE_PATH =
+  'M20.16 5A6.29 6.29 0 0 0 12 4.36a6.27 6.27 0 0 0-8.16 9.48l6.21 6.22a2.78 2.78 0 0 0 3.9 0l6.21-6.22a6.27 6.27 0 0 0 0-8.84m-1.41 7.46l-6.21 6.21a.76.76 0 0 1-1.08 0l-6.21-6.24a4.29 4.29 0 0 1 0-6a4.27 4.27 0 0 1 6 0a1 1 0 0 0 1.42 0a4.27 4.27 0 0 1 6 0a4.29 4.29 0 0 1 .08 6Z'
+
+export const HEART_SOLID_PATH =
+  'M20.16 5A6.29 6.29 0 0 0 12 4.36a6.27 6.27 0 0 0-8.16 9.48l6.21 6.22a2.78 2.78 0 0 0 3.9 0l6.21-6.22a6.27 6.27 0 0 0 0-8.84Z'
+
 /** Nombres en español de cada tipo, idénticos a los que devuelve la PokeAPI. */
 export const POKEMON_TYPE_LABELS: Record<PokemonTypeName, string> = {
   normal: 'Normal',
