@@ -64,6 +64,7 @@ export const usePokemonList = () => {
     if (isLoading.value || isLoadingMore.value || !hasMore.value) return
 
     isLoadingMore.value = true
+    error.value = null
 
     try {
       const nextBatch = source.value.slice(

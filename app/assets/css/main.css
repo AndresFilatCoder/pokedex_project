@@ -84,6 +84,20 @@
   [data-pokemon-type="stellar"] { --type-base: var(--color-type-stellar); }
   [data-pokemon-type="unknown"] { --type-base: var(--color-type-unknown); }
   [data-pokemon-type="shadow"] { --type-base: var(--color-type-shadow); }
+
+  /*
+   * Realce del color del tipo que sustituye a la silueta decorativa del
+   * diseño (hoja, llama, gota…), que no existe como imagen. El centro se
+   * ajusta con `--decoration-x` y `--decoration-y`.
+   */
+  .type-decoration {
+    background: radial-gradient(
+      circle at var(--decoration-x, 62%) var(--decoration-y, 42%),
+      color-mix(in srgb, white 34%, var(--type-base)) 0%,
+      color-mix(in srgb, white 14%, var(--type-base)) 46%,
+      var(--type-base) 74%
+    );
+  }
 }
 
 /** Los sprites de la PokeAPI son pixel art: se escalan sin difuminar. */

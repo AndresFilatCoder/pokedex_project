@@ -14,7 +14,7 @@ const displayName = computed(() => formatPokemonName(props.pokemon.name))
     <!-- En móvil el panel llega a los bordes de la pantalla, como en el diseño. -->
     <header
       :data-pokemon-type="primaryType"
-      class="type-decoration relative -mx-4 overflow-hidden rounded-b-[3rem] pb-4 sm:mx-0"
+      class="type-decoration relative -mx-4 overflow-hidden rounded-b-[3rem] pb-4 [--decoration-x:50%] [--decoration-y:30%] sm:mx-0"
     >
       <!-- TODO: Add image — silueta decorativa del tipo (hoja, llama, gota…). -->
       <div class="flex items-start justify-between px-4 pt-4">
@@ -86,15 +86,3 @@ const displayName = computed(() => formatPokemonName(props.pokemon.name))
     </div>
   </article>
 </template>
-
-<style scoped>
-/* Reemplaza la silueta del diseño con un realce del color del tipo. */
-.type-decoration {
-  background: radial-gradient(
-    circle at 50% 30%,
-    color-mix(in srgb, white 34%, var(--type-base)) 0%,
-    color-mix(in srgb, white 14%, var(--type-base)) 46%,
-    var(--type-base) 78%
-  );
-}
-</style>

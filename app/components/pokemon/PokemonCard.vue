@@ -13,8 +13,14 @@ const displayName = computed(() => formatPokemonName(props.pokemon.name))
     :data-pokemon-type="primaryType"
     class="relative flex h-40 overflow-hidden rounded-2xl bg-[var(--type-soft)] transition-transform duration-200 hover:-translate-y-1 motion-reduce:transition-none"
   >
-    <!-- Enlace extendido: la card entera navega sin anidar el botón de favorito. -->
-    <NuxtLink :to="`${ROUTES.details}/${pokemon.id}`" class="absolute inset-0 z-10 rounded-2xl">
+    <!--
+      Enlace extendido: la card entera navega sin anidar el botón de favorito.
+      El contorno de foco va hacia dentro porque la card recorta lo que sobresale.
+    -->
+    <NuxtLink
+      :to="`${ROUTES.details}/${pokemon.id}`"
+      class="absolute inset-0 z-10 rounded-2xl focus-visible:outline-2 focus-visible:-outline-offset-4 focus-visible:outline-pokedex-700"
+    >
       <span class="sr-only">Ver detalles de {{ displayName }}</span>
     </NuxtLink>
 
@@ -48,15 +54,3 @@ const displayName = computed(() => formatPokemonName(props.pokemon.name))
     </div>
   </article>
 </template>
-
-<style scoped>
-/* Reemplaza la silueta del diseño con un realce del color del tipo. */
-.type-decoration {
-  background: radial-gradient(
-    circle at 62% 42%,
-    color-mix(in srgb, white 34%, var(--type-base)) 0%,
-    color-mix(in srgb, white 14%, var(--type-base)) 46%,
-    var(--type-base) 72%
-  );
-}
-</style>

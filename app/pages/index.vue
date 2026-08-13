@@ -36,11 +36,13 @@ onBeforeUnmount(() => observer?.disconnect())
 
 <template>
   <div class="flex flex-col gap-4">
+    <h1 class="sr-only">Pokédex</h1>
+
     <PokemonFilterBar :count="total" />
 
     <AppLoader v-if="isLoading" size="lg" class="min-h-[50vh]" />
 
-    <AppErrorState v-else-if="error" @retry="loadPokemons" />
+    <AppErrorState v-else-if="error && !pokemons.length" @retry="loadPokemons" />
 
     <AppFeedbackState
       v-else-if="!pokemons.length"
@@ -53,7 +55,10 @@ onBeforeUnmount(() => observer?.disconnect())
     <template v-else>
       <PokemonGrid :pokemons="pokemons" :skeletons="pendingSkeletons" />
 
-      <div v-if="hasMore" ref="sentinel" class="h-px" aria-hidden="true" />
+      <!-- Si falla una tanda intermedia se conserva lo ya cargado. -->
+      <AppErrorState v-if="error" @retry="loadMore" />
+
+      <div v-else-if="hasMore" ref="sentinel" class="h-px" aria-hidden="true" />
     </template>
   </div>
 </template>

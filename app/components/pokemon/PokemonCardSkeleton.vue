@@ -1,5 +1,3 @@
-<script setup lang="ts"></script>
-
 <template>
   <div class="flex h-40 animate-pulse overflow-hidden rounded-2xl bg-zinc-200/70">
     <div class="flex flex-1 flex-col justify-center gap-3 py-4 pl-5 pr-2">

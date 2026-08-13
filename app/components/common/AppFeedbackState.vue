@@ -5,10 +5,13 @@ withDefaults(
     title: string
     description?: string
     imageAlt?: string
+    /** `h1` cuando el estado es el contenido principal de la página. */
+    titleTag?: 'h1' | 'h2'
   }>(),
   {
     description: '',
-    imageAlt: ''
+    imageAlt: '',
+    titleTag: 'h2'
   }
 )
 </script>
@@ -19,9 +22,9 @@ withDefaults(
   >
     <img :src="image" :alt="imageAlt" class="w-40 max-w-full md:w-48" />
 
-    <h2 class="mt-6 max-w-md text-2xl font-bold text-ink md:text-3xl">
+    <component :is="titleTag" class="mt-6 max-w-md text-2xl font-bold text-ink md:text-3xl">
       {{ title }}
-    </h2>
+    </component>
 
     <p v-if="description" class="mt-3 max-w-md text-base text-zinc-500">
       {{ description }}

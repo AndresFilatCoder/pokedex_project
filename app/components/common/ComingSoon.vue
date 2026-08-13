@@ -18,5 +18,6 @@ withDefaults(
     image-alt="Jigglypuff saludando"
     :title="title"
     :description="description"
+    title-tag="h1"
   />
 </template>
