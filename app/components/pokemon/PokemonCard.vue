@@ -18,7 +18,7 @@ const displayName = computed(() => formatPokemonName(props.pokemon.name))
       <span class="sr-only">Ver detalles de {{ displayName }}</span>
     </NuxtLink>
 
-    <div class="flex min-w-0 flex-1 flex-col justify-center gap-2 py-4 pl-5 pr-2">
+    <div class="flex min-w-0 flex-1 flex-col justify-center gap-2 py-4 pl-4 pr-2">
       <span class="text-sm font-semibold text-zinc-600">
         {{ formatPokemonNumber(pokemon.id) }}
       </span>
@@ -27,7 +27,7 @@ const displayName = computed(() => formatPokemonName(props.pokemon.name))
         {{ displayName }}
       </h2>
 
-      <ul class="flex flex-wrap items-center gap-2">
+      <ul class="flex flex-wrap items-center gap-1.5">
         <li v-for="type in pokemon.types" :key="type">
           <PokemonTypeBadge :type="type" />
         </li>

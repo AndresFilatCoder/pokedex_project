@@ -12,7 +12,7 @@ const mobileLinkClass = 'flex flex-1 flex-col items-center gap-1 py-2 text-xs tr
     <header
       class="sticky top-0 z-40 hidden border-b border-zinc-200 bg-surface/90 backdrop-blur md:block"
     >
-      <nav class="mx-auto flex h-16 w-full max-w-6xl items-center justify-between px-6">
+      <nav class="mx-auto flex h-16 w-full max-w-7xl items-center justify-between px-6">
         <NuxtLink :to="ROUTES.pokedex" class="flex items-center gap-2.5">
           <img src="/images/pokeball.png" alt="" class="size-8" />
           <span class="text-lg font-bold tracking-tight text-ink">Pokédex</span>

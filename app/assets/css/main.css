@@ -95,3 +95,11 @@ body {
   background-color: var(--color-surface);
   color: var(--color-ink);
 }
+
+/* Tailwind v4 dejó los botones con el cursor por defecto. */
+@layer base {
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+}

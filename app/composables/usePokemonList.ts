@@ -28,7 +28,7 @@ export const usePokemonList = () => {
   /** Nombres admitidos por el filtro de tipos; `null` cuando no hay ninguno marcado. */
   const typeFilterNames = useState<Set<string> | null>('pokemon-type-filter', () => null)
 
-  const isLoading = ref(false)
+  const isLoading = ref(true)
   const isLoadingMore = ref(false)
   const error = ref<Error | null>(null)
 
