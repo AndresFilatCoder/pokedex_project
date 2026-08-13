@@ -1,7 +1,7 @@
 # Pokédex — Plan de implementación
 
 > Estado del proyecto y plan por fases.
-> **Fase 3 completada — esperando aprobación para la Fase 4.**
+> **Fase 4 completada — esperando aprobación para la Fase 5.**
 
 ---
 
@@ -207,8 +207,35 @@ Carga del índice y de detalles por tandas con scroll infinito; `PokemonCard` co
 
 **Nota:** las cards ya enlazan a `/details/{id}`, cuya página llega en la Fase 6; hasta entonces esa ruta cae en el 404.
 
-### Fase 4 — Filtros ⬜
+### Fase 4 — Filtros ✅
 Barra de búsqueda sin debounce con filtro *case-insensitive* tipo `icontains`; modal de tipos con checkboxes múltiples, scroll y botones Aplicar / Cancelar; combinación de ambos filtros; resumen "Se han encontrado N resultados" + "Borrar filtro"; estado sin resultados. Reutilizable en Pokédex y Favoritos.
+
+**Archivos creados**
+
+| Archivo | Contenido |
+| --- | --- |
+| `app/composables/usePokemonTypes.ts` | Catálogo de tipos y pertenencia de cada Pokémon a ellos |
+| `app/components/filters/PokemonFilterBar.vue` | Búsqueda, acceso al modal y resumen de resultados |
+| `app/components/filters/PokemonTypeFilterModal.vue` | Selección múltiple de tipos con Aplicar y Cancelar |
+| `app/components/filters/FilterResultsSummary.vue` | Recuento y botón "Borrar filtro" |
+| `app/utils/filters.ts` | Predicados de nombre y de tipos, compartidos con Favoritos |
+
+**Decisiones de esta fase**
+
+- **Una sola carga resuelve el modal y el filtrado:** el detalle de cada tipo trae a la vez su nombre en español y la lista de Pokémon que lo tienen, así que las 21 peticiones se hacen una única vez y quedan en caché.
+- **Los filtros se aplican sobre el índice completo**, no sobre lo ya cargado: buscar "bul" encuentra a Tadbulb aunque nunca se haya desplazado hasta él. Al cambiar un filtro el listado vuelve a la primera tanda y pide solo los detalles que falten.
+- **Varios tipos se combinan como unión**, según el supuesto declarado: "Planta" y "Veneno" devuelve los de planta *o* de veneno.
+- **Tipos sin ningún Pokémon fuera del modal:** la PokeAPI devuelve 21 tipos, entre ellos algunos sin miembros que solo darían cero resultados. El criterio es la propia respuesta de la API, no una lista fija.
+- **La selección del modal es un borrador:** solo llega al store al pulsar "Aplicar", de modo que "Cancelar" descarta los cambios.
+- **Modal centrado en lugar de hoja inferior:** el diseño móvil muestra una hoja que sube desde abajo; en web se adapta como modal centrado con desplazamiento interno.
+- **Texto del buscador:** el diseño dice "Procurar Pókemon...", que no es español. Se usa "Buscar Pokémon...".
+- La barra de filtros permanece montada mientras se recargan los resultados, para que el campo no pierda el foco al escribir.
+
+**Fallo corregido durante la verificación:** al escribir rápido, el contador mostraba 5 resultados pero solo se pintaban 3 cards. Cada pulsación lanza una carga y las nuevas se descartaban mientras había una en curso, dejando el listado desincronizado respecto al texto escrito. Ahora cada carga lleva un identificador y solo la última puede escribir el resultado.
+
+**Verificación en navegador (Chrome, 430 px y 1440 px):** "BUL" en mayúsculas encuentra los 5 Pokémon que contienen "bul" en cualquier posición; el modal lista los tipos en español desde la API con desplazamiento; marcar Planta y Veneno junto a "BUL" deja 2 resultados; "Cancelar" descarta la selección; "Borrar filtro" restaura los 30 iniciales; una búsqueda sin coincidencias muestra "0 resultados" y la interfaz correspondiente. `tsc`, `eslint` y `nuxt build` correctos.
+
+**Cambio pedido aparte:** el corazón de favoritos ahora se pinta relleno en rojo. Ambos trazados salen del icono `uil:heart` —el original y el mismo sin su contorno interior— para que la silueta sea idéntica en los dos estados sin añadir dependencias.
 
 ### Fase 5 — Favoritos ⬜
 Página `/favorites` con cabecera, listado desde el store persistido, desmarcado por corazón, estado vacío (`favorites_page_list_of_favorite_pokemons_empty`) y filtros de la Fase 4 integrados.
@@ -228,7 +255,7 @@ Revisión de animaciones y transiciones, accesibilidad (foco, `aria-label`, nave
 | 1 | ✅ Completada | 2026-08-12 | Base de datos, estado y estilos. Sin dependencias nuevas |
 | 2 | ✅ Completada | 2026-08-12 | Onboarding, middleware global y navegación |
 | 3 | ✅ Completada | 2026-08-12 | Listado, carga progresiva y favoritos |
-| 4 | ⬜ Pendiente | — | — |
+| 4 | ✅ Completada | 2026-08-12 | Filtros combinables, recuento y limpieza |
 | 5 | ⬜ Pendiente | — | — |
 | 6 | ⬜ Pendiente | — | — |
 | 7 | ⬜ Pendiente | — | — |
