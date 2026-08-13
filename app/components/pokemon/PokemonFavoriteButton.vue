@@ -2,7 +2,14 @@
 import { HEART_OUTLINE_PATH, HEART_SOLID_PATH } from '~/constants/pokemon'
 import type { PokemonSummary } from '~/types/pokemon'
 
-const props = defineProps<{ pokemon: PokemonSummary }>()
+const props = withDefaults(
+  defineProps<{
+    pokemon: PokemonSummary
+    /** Sin el círculo de fondo, como aparece en la cabecera del detalle. */
+    plain?: boolean
+  }>(),
+  { plain: false }
+)
 
 const favoritesStore = useFavoritesStore()
 
@@ -20,7 +27,10 @@ const label = computed(() =>
     type="button"
     :aria-label="label"
     :aria-pressed="isFavorite"
-    class="flex size-11 items-center justify-center rounded-full bg-neutral-600/50 ring-2 ring-white/70 backdrop-blur-[2px] transition-transform hover:scale-110 active:scale-95 motion-reduce:transition-none"
+    :class="[
+      'flex size-11 items-center justify-center rounded-full transition-transform hover:scale-110 active:scale-95 motion-reduce:transition-none',
+      plain ? '' : 'bg-neutral-600/50 ring-2 ring-white/70 backdrop-blur-[2px]'
+    ]"
     @click="favoritesStore.toggle(pokemon)"
   >
     <svg

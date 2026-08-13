@@ -121,3 +121,17 @@ export interface PokemonTypeOption {
   name: PokemonTypeName
   label: string
 }
+
+/** Modelo ya resuelto que consume la página de detalle. */
+export interface PokemonDetailView extends PokemonSummary {
+  description: string
+  /** Kilogramos. */
+  weight: number
+  /** Metros. */
+  height: number
+  category: string
+  ability: string
+  /** Porcentaje de hembras; `null` si la especie no tiene género. */
+  femaleRatio: number | null
+  weaknesses: PokemonTypeName[]
+}

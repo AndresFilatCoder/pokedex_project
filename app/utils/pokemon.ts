@@ -19,6 +19,27 @@ export const formatPokemonName = (name: string): string =>
 export const getLocalizedName = (names: LocalizedName[], fallback: string): string =>
   names.find(entry => entry.language.name === API_LANGUAGE)?.name ?? fallback
 
+/** La PokeAPI devuelve hectogramos y decímetros. */
+export const toKilograms = (hectograms: number): number => hectograms / 10
+export const toMeters = (decimeters: number): number => decimeters / 10
+
+const formatDecimal = (value: number, minimumFractionDigits: number) =>
+  value.toLocaleString('es-ES', { minimumFractionDigits, maximumFractionDigits: 1 })
+
+export const formatWeight = (kilograms: number): string => `${formatDecimal(kilograms, 1)} kg`
+export const formatHeight = (meters: number): string => `${formatDecimal(meters, 1)} m`
+export const formatPercentage = (value: number): string => `${formatDecimal(value, 0)}%`
+
+/** Los textos descriptivos de la API traen saltos de línea y de página. */
+export const sanitizeFlavorText = (text: string): string => text.replace(/\s+/g, ' ').trim()
+
+/** El género llega como "Pokémon Semilla" y el diseño solo muestra "SEMILLA". */
+export const formatCategory = (genus: string): string =>
+  genus
+    .replace(/pok[ée]mon/i, '')
+    .trim()
+    .toUpperCase()
+
 /** Normaliza texto para búsquedas insensibles a mayúsculas y acentos. */
 export const normalizeText = (value: string): string =>
   value
