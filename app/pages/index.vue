@@ -35,10 +35,20 @@ onBeforeUnmount(() => observer?.disconnect())
 </script>
 
 <template>
-  <div>
-    <AppLoader v-if="isLoading" size="lg" class="min-h-[70vh]" />
+  <div class="flex flex-col gap-4">
+    <PokemonFilterBar :count="total" />
+
+    <AppLoader v-if="isLoading" size="lg" class="min-h-[50vh]" />
 
     <AppErrorState v-else-if="error" @retry="loadPokemons" />
+
+    <AppFeedbackState
+      v-else-if="!pokemons.length"
+      image="/images/magikarp.png"
+      image-alt="Magikarp desanimado"
+      title="No encontramos ningún Pokémon"
+      description="Prueba con otro nombre o cambia los tipos seleccionados."
+    />
 
     <template v-else>
       <PokemonGrid :pokemons="pokemons" :skeletons="pendingSkeletons" />
