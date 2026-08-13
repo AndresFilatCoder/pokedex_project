@@ -7,7 +7,10 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "vue-tsc --noEmit"
   },
   "dependencies": {
     "@nuxt/ui": "^4.10.0",
@@ -47,7 +50,12 @@
   },
   "devDependencies": {
     "@iconify-json/uil": "^1.2.3",
+    "@nuxt/test-utils": "^4.1.0",
     "@types/node": "^26.1.1",
-    "sass-embedded": "^1.100.0"
+    "@vue/test-utils": "^2.4.11",
+    "happy-dom": "^20.11.2",
+    "sass-embedded": "^1.100.0",
+    "vitest": "^4.1.10",
+    "vue-tsc": "^3.3.9"
   }
 }
