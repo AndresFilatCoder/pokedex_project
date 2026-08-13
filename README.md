@@ -8,7 +8,7 @@ Aplicación web moderna construida con **Nuxt 3** y **Vue 3** que explora el fas
 
 > 🌐 **Link de vercel**
 >
-> https://pokedexprojectvercel.vercel.app/
+> https://pokedex-project-two-ebon.vercel.app/
 
 ---
 
