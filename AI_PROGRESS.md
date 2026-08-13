@@ -1,7 +1,7 @@
 # Pokédex — Plan de implementación
 
 > Estado del proyecto y plan por fases.
-> **Fase 6 completada — esperando aprobación para la Fase 7.**
+> **Proyecto completado. Las siete fases están cerradas.**
 
 ---
 
@@ -283,8 +283,23 @@ Página `/details/[id]` con la card completa: sprite sobre panel de color, núme
 
 **Verificación en navegador (Chrome, 430 px y 1440 px):** Bulbasaur reproduce el diseño dato por dato — 6,9 kg, 0,7 m, SEMILLA, Espesura, 87,5 % / 12,5 % — y sus debilidades son **Volador, Fuego, Hielo y Psíquico**, exactamente las cuatro del diseño. Magnemite oculta la barra de género y muestra Tierra, Lucha y Fuego. Un id inexistente muestra la interfaz de error. Marcar favorito desde el detalle lo persiste, y la flecha devuelve al listado sin recargarlo. `tsc`, `eslint` y `nuxt build` correctos.
 
-### Fase 7 — Pulido final ⬜
-Revisión de animaciones y transiciones, accesibilidad (foco, `aria-label`, navegación por teclado), ajuste responsive, ejecución de ESLint/Prettier y verificación del build de producción.
+### Fase 7 — Pulido final ✅
+Revisión de animaciones y transiciones, accesibilidad (foco, `aria-label`, navegación por teclado), ajuste responsive, ejecución de ESLint/Prettier y verificación del build.
+
+**Correcciones**
+
+- **Un error al hacer scroll ya no borra el listado.** Si fallaba una tanda intermedia, el estado de error sustituía a las cards ya cargadas y se perdía todo el avance. Ahora ese estado solo ocupa la pantalla cuando no hay nada cargado; si ya hay resultados aparece al final de la lista y su botón reintenta únicamente la tanda que falló. El error también se limpia al empezar cada intento.
+- **El contorno de foco de las cards era invisible.** Se dibujaba por fuera del enlace y la card lo recortaba con `overflow-hidden`. Ahora va hacia dentro y se ve al recorrer con el tabulador.
+- **Jerarquía de encabezados:** cada página tiene un único `h1`. El listado lleva uno para lectores de pantalla, ya que el diseño no muestra título, y los estados que son el contenido principal de su página lo indican con `title-tag`.
+- **Degradado duplicado:** la misma regla estaba repetida en la card del listado y en la del detalle. Ahora vive en `main.css` y el centro se ajusta con variables.
+- **Cursor de los botones** restaurado globalmente, y la página 404 alineada con la paleta del proyecto.
+- Se retiraron bloques `<script setup>` vacíos.
+
+**Sobre las transiciones:** se probó añadir una transición entre páginas, pero no se incluye. En el navegador automatizado la ventana está oculta, Chrome detiene `requestAnimationFrame` y Vue nunca retira la clase inicial, de modo que **cualquier** transición CSS queda congelada y no se puede verificar. Como es un extra no pedido y su fallo dejaría páginas sin cambiar, se descartó. La transición del onboarding sí se mantiene: quedó verificada funcionando.
+
+**Verificación final:** navegación completa entre las cinco páginas en dos ciclos, sin contenido obsoleto; foco por teclado visible en cards y botones; diseño correcto a 375, 430, 1024 y 1440 px; flujo de onboarding desde cero hasta el listado. Sin `any` ni `@ts-ignore` en todo el proyecto. `tsc`, `eslint` y `nuxt build` correctos.
+
+**Pendientes conocidos:** los dos `TODO: Add image` de la silueta decorativa del tipo, en la card del listado y en la del detalle.
 
 ---
 
@@ -298,4 +313,4 @@ Revisión de animaciones y transiciones, accesibilidad (foco, `aria-label`, nave
 | 4 | ✅ Completada | 2026-08-12 | Filtros combinables, recuento y limpieza |
 | 5 | ✅ Completada | 2026-08-12 | Favoritos con filtros y estados vacíos |
 | 6 | ✅ Completada | 2026-08-12 | Detalle con debilidades calculadas |
-| 7 | ⬜ Pendiente | — | — |
+| 7 | ✅ Completada | 2026-08-12 | Accesibilidad, foco, estados de error y limpieza |
