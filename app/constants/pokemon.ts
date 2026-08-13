@@ -63,8 +63,8 @@ export const POKEMON_TYPE_ICONS: Record<PokemonTypeName, string> = {
   shadow: 'i-uil-ban'
 }
 
-/** Nombres en español de respaldo si la PokeAPI no devuelve la traducción. */
-export const POKEMON_TYPE_FALLBACK_LABELS: Record<PokemonTypeName, string> = {
+/** Nombres en español de cada tipo, idénticos a los que devuelve la PokeAPI. */
+export const POKEMON_TYPE_LABELS: Record<PokemonTypeName, string> = {
   normal: 'Normal',
   fighting: 'Lucha',
   flying: 'Volador',

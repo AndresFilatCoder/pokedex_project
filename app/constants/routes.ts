@@ -3,7 +3,8 @@ export const ROUTES = {
   regions: '/regions',
   favorites: '/favorites',
   profile: '/profile',
-  onboarding: '/onboarding'
+  onboarding: '/onboarding',
+  details: '/details'
 } as const
 
 export interface NavigationItem {
