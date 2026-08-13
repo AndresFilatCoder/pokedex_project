@@ -1,7 +1,7 @@
 # Pokédex — Plan de implementación
 
 > Estado del proyecto y plan por fases.
-> **Fase 5 completada — esperando aprobación para la Fase 6.**
+> **Fase 6 completada — esperando aprobación para la Fase 7.**
 
 ---
 
@@ -257,8 +257,31 @@ Página `/favorites` con cabecera, listado desde el store persistido, desmarcado
 
 **Verificación en navegador (Chrome, 430 px y 1440 px):** sin favoritos aparece la interfaz del diseño; con cuatro favoritos se listan correctamente; buscar "CHA" deja 1 resultado y el texto concuerda en singular; filtrar por "Fuego" deja solo a Charmeleon; el filtro aplicado se conserva al pasar al listado general, donde devuelve 109 Pokémon de fuego; desmarcar un favorito lo quita del listado y de `localStorage`; al desmarcar el último vuelve la interfaz de lista vacía. `tsc`, `eslint` y `nuxt build` correctos.
 
-### Fase 6 — Detalle del Pokémon ⬜
+### Fase 6 — Detalle del Pokémon ✅
 Página `/details/[id]` con la card completa: sprite sobre panel de color, número, nombre, badges, descripción en español, peso, altura, categoría, habilidad, barra de género, debilidades calculadas, botón de favorito, retroceso, loader y estado de error; SEO dinámico con el nombre del Pokémon.
+
+**Archivos creados**
+
+| Archivo | Contenido |
+| --- | --- |
+| `app/pages/details/[id].vue` | Carga del detalle y sus estados |
+| `app/composables/usePokemonDetail.ts` | Combina Pokémon, especie, habilidad y tipos |
+| `app/utils/effectiveness.ts` | Cálculo de debilidades |
+| `app/components/pokemon/PokemonDetailCard.vue` | Ficha completa según el diseño |
+| `app/components/pokemon/PokemonInfoBox.vue` · `PokemonGenderBar.vue` | Recuadros de datos y barra de género |
+
+**Decisiones de esta fase**
+
+- **Las debilidades se calculan multiplicando efectividades**, no uniendo los `double_damage_from` de cada tipo. Un segundo tipo puede resistir lo que el primero encaja mal: Bulbasaur, de planta y veneno, no es débil a bicho, veneno ni tierra, aunque la planta sí lo sea. Solo se evalúan los tipos que dañan el doble a alguno de sus tipos, porque ningún otro puede superar el daño normal.
+- **Cuatro recursos combinados:** el Pokémon da tipos, medidas y habilidad; la especie da descripción, categoría y género; la habilidad da su nombre en español; y cada tipo, sus relaciones de daño.
+- **Categoría:** la API devuelve "Pokémon Semilla" y el diseño solo muestra "SEMILLA", así que se recorta el prefijo.
+- **Habilidad principal, no oculta:** el diseño muestra una sola, y la primera no oculta es la que corresponde.
+- **Sin género la barra desaparece**, según el supuesto declarado. Se comprobó con Magnemite.
+- **Retroceso al origen:** la flecha vuelve a la página anterior, sea el listado general o el de favoritos, y cae en la Pokédex si se entró por enlace directo.
+- **Adaptación a escritorio:** columna centrada de ancho máximo, conservando el diseño vertical. El panel de color llega a los bordes en móvil, como en el diseño.
+- Se añadió la variante `plain` al botón de favorito, porque en la cabecera del detalle el corazón va sin el círculo de fondo.
+
+**Verificación en navegador (Chrome, 430 px y 1440 px):** Bulbasaur reproduce el diseño dato por dato — 6,9 kg, 0,7 m, SEMILLA, Espesura, 87,5 % / 12,5 % — y sus debilidades son **Volador, Fuego, Hielo y Psíquico**, exactamente las cuatro del diseño. Magnemite oculta la barra de género y muestra Tierra, Lucha y Fuego. Un id inexistente muestra la interfaz de error. Marcar favorito desde el detalle lo persiste, y la flecha devuelve al listado sin recargarlo. `tsc`, `eslint` y `nuxt build` correctos.
 
 ### Fase 7 — Pulido final ⬜
 Revisión de animaciones y transiciones, accesibilidad (foco, `aria-label`, navegación por teclado), ajuste responsive, ejecución de ESLint/Prettier y verificación del build de producción.
@@ -274,5 +297,5 @@ Revisión de animaciones y transiciones, accesibilidad (foco, `aria-label`, nave
 | 3 | ✅ Completada | 2026-08-12 | Listado, carga progresiva y favoritos |
 | 4 | ✅ Completada | 2026-08-12 | Filtros combinables, recuento y limpieza |
 | 5 | ✅ Completada | 2026-08-12 | Favoritos con filtros y estados vacíos |
-| 6 | ⬜ Pendiente | — | — |
+| 6 | ✅ Completada | 2026-08-12 | Detalle con debilidades calculadas |
 | 7 | ⬜ Pendiente | — | — |
