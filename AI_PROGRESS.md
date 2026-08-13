@@ -1,7 +1,7 @@
 # Pokédex — Plan de implementación
 
 > Estado del proyecto y plan por fases.
-> **Fase 2 completada — esperando aprobación para la Fase 3.**
+> **Fase 3 completada — esperando aprobación para la Fase 4.**
 
 ---
 
@@ -180,8 +180,32 @@ Página `/onboarding` de 2 pasos con transición, dots de progreso y botones "Co
 
 **Verificación en navegador (Chrome, 430 px y 1440 px):** entrar a `/favorites` sin haber pasado el onboarding redirige a él; "Continuar" lleva al paso 2 con los dots invertidos; "Empecemos" guarda `{"onboardingCompleted":true}` en localStorage y lleva al listado; volver a `/onboarding` redirige al listado y recargar `/favorites` ya no redirige. Sin errores ni avisos de hidratación en consola. `tsc`, `eslint` y `nuxt build` correctos.
 
-### Fase 3 — Listado de Pokémon ⬜
+### Fase 3 — Listado de Pokémon ✅
 Carga del índice y de detalles por tandas con scroll infinito; `PokemonCard` con color por tipo principal, número, nombre, badges de tipo y botón de favorito; grid responsive; skeletons durante la carga; estado de error con reintento; card clicable hacia el detalle.
+
+**Archivos creados**
+
+| Archivo | Contenido |
+| --- | --- |
+| `app/composables/usePokemonList.ts` | Índice, caché de detalles, tandas y estados de carga y error |
+| `app/components/pokemon/PokemonCard.vue` | Card completa con enlace, sprite y color del tipo principal |
+| `app/components/pokemon/PokemonTypeBadge.vue` | Distintivo con el color y el icono de su propio tipo |
+| `app/components/pokemon/PokemonFavoriteButton.vue` | Botón de corazón conectado al store |
+| `app/components/pokemon/PokemonGrid.vue` · `PokemonCardSkeleton.vue` | Rejilla responsive y card de carga |
+
+**Decisiones de esta fase**
+
+- **Caché por nombre:** los detalles se guardan en un `Map` dentro de `useState`, así que volver a un tramo ya visto no repite peticiones y navegar al detalle y regresar conserva el listado. La Fase 4 aprovechará esta caché al filtrar.
+- **Enlace extendido:** la card es un `article` con un enlace absoluto que la cubre, en lugar de envolverlo todo en un `NuxtLink`. Evita anidar el botón de favorito dentro de un enlace y mantiene el HTML válido.
+- **Scroll infinito con `IntersectionObserver`** sobre un elemento centinela, con 400 px de margen para que la siguiente tanda llegue antes de alcanzar el final. El observador se reengancha mediante un `watch` sobre la referencia, porque el centinela desaparece cuando ya no queda nada por cargar.
+- **Sprites a tamaño completo del panel:** los sprites de la PokeAPI traen mucho margen transparente, así que a tamaño fijo se veían mucho menores que en los diseños.
+- **Silueta decorativa:** no existe la imagen de la hoja, la llama ni las demás siluetas del panel derecho. Se sustituye por un degradado radial con el color del tipo y queda marcado con `TODO: Add image`.
+- **Corazón:** Unicons no incluye ningún corazón sólido, así que el marcado se distingue por el color (rojo `#D9443F`) manteniendo el trazo. En los diseños el corazón marcado es sólido.
+- **Rejilla:** una columna en móvil como en los diseños, dos desde 768 px y tres desde 1280 px.
+
+**Verificación en navegador (Chrome, 430 px y 1440 px):** el listado carga 30 cards y el scroll infinito llega a 90; marcar un favorito lo persiste, no navega y **el Pokémon sigue en el listado general**; pulsar la card navega a `/details/{id}`; simulando una caída de la API aparece la interfaz de error y "Reintentar" recupera el listado; ralentizando las peticiones se ven las 30 cards de carga. `tsc`, `eslint` y `nuxt build` correctos.
+
+**Nota:** las cards ya enlazan a `/details/{id}`, cuya página llega en la Fase 6; hasta entonces esa ruta cae en el 404.
 
 ### Fase 4 — Filtros ⬜
 Barra de búsqueda sin debounce con filtro *case-insensitive* tipo `icontains`; modal de tipos con checkboxes múltiples, scroll y botones Aplicar / Cancelar; combinación de ambos filtros; resumen "Se han encontrado N resultados" + "Borrar filtro"; estado sin resultados. Reutilizable en Pokédex y Favoritos.
@@ -203,7 +227,7 @@ Revisión de animaciones y transiciones, accesibilidad (foco, `aria-label`, nave
 | --- | --- | --- | --- |
 | 1 | ✅ Completada | 2026-08-12 | Base de datos, estado y estilos. Sin dependencias nuevas |
 | 2 | ✅ Completada | 2026-08-12 | Onboarding, middleware global y navegación |
-| 3 | ⬜ Pendiente | — | — |
+| 3 | ✅ Completada | 2026-08-12 | Listado, carga progresiva y favoritos |
 | 4 | ⬜ Pendiente | — | — |
 | 5 | ⬜ Pendiente | — | — |
 | 6 | ⬜ Pendiente | — | — |
