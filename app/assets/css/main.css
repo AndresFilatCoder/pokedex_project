@@ -1,6 +1,96 @@
 @import "tailwindcss";
 @import "@nuxt/ui";
 
+/*
+ * Paleta tomada de los diseños de `public/graphic_identity`.
+ * Los tipos que no aparecen en ningún diseño usan el color canónico de la saga
+ * ajustado al mismo tono suave.
+ *
+ * `static` es necesario: Nuxt UI enlaza su color primario con estas variables
+ * en tiempo de ejecución y Tailwind descartaría las que no ve usadas.
+ */
+@theme static {
+  --color-pokedex-50: #eff5fd;
+  --color-pokedex-100: #dce9fa;
+  --color-pokedex-200: #c0d8f6;
+  --color-pokedex-300: #94bfef;
+  --color-pokedex-400: #6ba5e7;
+  --color-pokedex-500: #4386de;
+  --color-pokedex-600: #2f6bc4;
+  --color-pokedex-700: #2a55a6;
+  --color-pokedex-800: #233ca0;
+  --color-pokedex-900: #1e357f;
+  --color-pokedex-950: #14224f;
+
+  --color-surface: #fafafa;
+  --color-ink: #121214;
+  --color-male: #2f52b6;
+  --color-female: #e87f96;
+
+  --color-type-normal: #a8a878;
+  --color-type-fighting: #c14f4a;
+  --color-type-flying: #55b9d1;
+  --color-type-poison: #9031a9;
+  --color-type-ground: #dfb44f;
+  --color-type-rock: #b6a136;
+  --color-type-bug: #9aae2a;
+  --color-type-ghost: #735797;
+  --color-type-steel: #9a9aae;
+  --color-type-fire: #f19e38;
+  --color-type-water: #3f9bd9;
+  --color-type-grass: #97c15d;
+  --color-type-electric: #edc12b;
+  --color-type-psychic: #603bac;
+  --color-type-ice: #5587f8;
+  --color-type-dragon: #6f5bd6;
+  --color-type-dark: #6b5749;
+  --color-type-fairy: #d685ad;
+  --color-type-stellar: #7fb6c4;
+  --color-type-unknown: #68a090;
+  --color-type-shadow: #4b4453;
+}
+
+/*
+ * Cada elemento con `data-pokemon-type` expone el color de su tipo en tres
+ * intensidades, de forma que las cards se pintan sin clases condicionales.
+ * `--type-soft` reproduce el tono claro de las cards del diseño.
+ */
 @layer components {
-  
+  [data-pokemon-type] {
+    --type-base: var(--color-type-normal);
+    --type-soft: color-mix(in srgb, var(--type-base) 55%, white);
+    --type-tint: color-mix(in srgb, var(--type-base) 28%, white);
+  }
+
+  [data-pokemon-type="normal"] { --type-base: var(--color-type-normal); }
+  [data-pokemon-type="fighting"] { --type-base: var(--color-type-fighting); }
+  [data-pokemon-type="flying"] { --type-base: var(--color-type-flying); }
+  [data-pokemon-type="poison"] { --type-base: var(--color-type-poison); }
+  [data-pokemon-type="ground"] { --type-base: var(--color-type-ground); }
+  [data-pokemon-type="rock"] { --type-base: var(--color-type-rock); }
+  [data-pokemon-type="bug"] { --type-base: var(--color-type-bug); }
+  [data-pokemon-type="ghost"] { --type-base: var(--color-type-ghost); }
+  [data-pokemon-type="steel"] { --type-base: var(--color-type-steel); }
+  [data-pokemon-type="fire"] { --type-base: var(--color-type-fire); }
+  [data-pokemon-type="water"] { --type-base: var(--color-type-water); }
+  [data-pokemon-type="grass"] { --type-base: var(--color-type-grass); }
+  [data-pokemon-type="electric"] { --type-base: var(--color-type-electric); }
+  [data-pokemon-type="psychic"] { --type-base: var(--color-type-psychic); }
+  [data-pokemon-type="ice"] { --type-base: var(--color-type-ice); }
+  [data-pokemon-type="dragon"] { --type-base: var(--color-type-dragon); }
+  [data-pokemon-type="dark"] { --type-base: var(--color-type-dark); }
+  [data-pokemon-type="fairy"] { --type-base: var(--color-type-fairy); }
+  [data-pokemon-type="stellar"] { --type-base: var(--color-type-stellar); }
+  [data-pokemon-type="unknown"] { --type-base: var(--color-type-unknown); }
+  [data-pokemon-type="shadow"] { --type-base: var(--color-type-shadow); }
+}
+
+/** Los sprites de la PokeAPI son pixel art: se escalan sin difuminar. */
+@utility pixelated {
+  image-rendering: pixelated;
+}
+
+body {
+  background-color: var(--color-surface);
+  color: var(--color-ink);
 }

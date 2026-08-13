@@ -1,6 +1,6 @@
-const timeout = ref()
+const timeout = ref<ReturnType<typeof setTimeout>>()
 
-export const useDelay = (callback: any, delay: number) => {
+export const useDelay = (callback: () => void, delay: number) => {
   clearTimeout(timeout.value)
   timeout.value = setTimeout(() => callback(), delay)
 }

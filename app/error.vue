@@ -30,9 +30,7 @@ defineProps<{
           ubicación.
         </p>
 
-        <NuxtLink to="/">
-          <Button class="mt-8"> Volver al inicio </Button>
-        </NuxtLink>
+        <UButton to="/" size="xl" class="mt-8 rounded-full"> Volver al inicio </UButton>
       </div>
     </div>
   </main>
