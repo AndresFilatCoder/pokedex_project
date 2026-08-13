@@ -1,7 +1,7 @@
 # Pokédex — Plan de implementación
 
 > Estado del proyecto y plan por fases.
-> **Fase 1 completada — esperando aprobación para la Fase 2.**
+> **Fase 2 completada — esperando aprobación para la Fase 3.**
 
 ---
 
@@ -153,8 +153,32 @@ Tipado completo de la PokeAPI en `app/types/`; corrección de los 3 defectos det
 
 **Queda para su fase:** el cálculo de debilidades se implementará en la Fase 6, junto a la pantalla que lo consume.
 
-### Fase 2 — Onboarding, middleware y navegación ⬜
+### Fase 2 — Onboarding, middleware y navegación ✅
 Página `/onboarding` de 2 pasos con transición, dots de progreso y botones "Continuar" / "Empecemos" (sin retroceso); persistencia de `onboardingCompleted`; middleware global de cliente que redirige a `/onboarding` a quien no lo haya completado; `AppNavbar` responsive (superior en desktop, inferior en móvil) en el layout `default`; páginas Regiones y Perfil con `ComingSoon`; `useSeoMeta` por página.
+
+**Archivos creados**
+
+| Archivo | Contenido |
+| --- | --- |
+| `app/constants/routes.ts` | Rutas de la aplicación y opciones del menú |
+| `app/constants/onboarding.ts` | Contenido de los dos pasos (imagen, textos y botón) |
+| `app/pages/onboarding.vue` | Paso actual, transición y cierre del onboarding |
+| `app/components/onboarding/OnboardingSlide.vue` · `OnboardingDots.vue` | Contenido de cada paso e indicador de progreso |
+| `app/middleware/onboarding.global.ts` | Redirección según `onboardingCompleted` |
+| `app/components/layout/AppNavbar.vue` | Cabecera en escritorio y barra inferior en móvil |
+| `app/layouts/default.vue` | Contenedor con navegación y espacio para la barra inferior |
+
+**Decisiones de esta fase**
+
+- **El onboarding no se puede revisitar:** quien ya lo completó y entra a `/onboarding` es redirigido al listado. Se desprende de que el onboarding es solo para usuarios nuevos.
+- **Sin retroceso:** el paso solo avanza; no existe ninguna acción que lo disminuya.
+- **Menú en un solo componente:** `AppNavbar` pinta la cabecera de escritorio y la barra inferior de móvil desde la misma lista de opciones, alternando con `md:`. Su raíz usa `contents` para no crear una caja propia, que impediría fijar la cabecera al hacer scroll.
+- **Enlace activo:** se usa `exact-active-class` en lugar de `active-class`, porque la ruta `/` de Pokedex es prefijo de todas y quedaría siempre marcada.
+- **Textos del menú:** se usan los del requerimiento, con "Favoritos" en mayúscula inicial como las otras tres opciones; en los diseños aparece en minúscula.
+- **Iconos:** los del menú son de trazo y en los diseños son sólidos. La colección instalada es Unicons Line; las variantes sólidas son paquetes aparte que no se instalan.
+- Los estados centrados (`AppFeedbackState`) se alinean al centro vertical del área visible, como en los diseños.
+
+**Verificación en navegador (Chrome, 430 px y 1440 px):** entrar a `/favorites` sin haber pasado el onboarding redirige a él; "Continuar" lleva al paso 2 con los dots invertidos; "Empecemos" guarda `{"onboardingCompleted":true}` en localStorage y lleva al listado; volver a `/onboarding` redirige al listado y recargar `/favorites` ya no redirige. Sin errores ni avisos de hidratación en consola. `tsc`, `eslint` y `nuxt build` correctos.
 
 ### Fase 3 — Listado de Pokémon ⬜
 Carga del índice y de detalles por tandas con scroll infinito; `PokemonCard` con color por tipo principal, número, nombre, badges de tipo y botón de favorito; grid responsive; skeletons durante la carga; estado de error con reintento; card clicable hacia el detalle.
@@ -178,7 +202,7 @@ Revisión de animaciones y transiciones, accesibilidad (foco, `aria-label`, nave
 | Fase | Estado | Fecha | Notas |
 | --- | --- | --- | --- |
 | 1 | ✅ Completada | 2026-08-12 | Base de datos, estado y estilos. Sin dependencias nuevas |
-| 2 | ⬜ Pendiente | — | — |
+| 2 | ✅ Completada | 2026-08-12 | Onboarding, middleware global y navegación |
 | 3 | ⬜ Pendiente | — | — |
 | 4 | ⬜ Pendiente | — | — |
 | 5 | ⬜ Pendiente | — | — |
