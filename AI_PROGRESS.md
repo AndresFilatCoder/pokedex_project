@@ -1,7 +1,7 @@
 # Pokédex — Plan de implementación
 
 > Estado del proyecto y plan por fases.
-> **Fase 4 completada — esperando aprobación para la Fase 5.**
+> **Fase 5 completada — esperando aprobación para la Fase 6.**
 
 ---
 
@@ -237,8 +237,25 @@ Barra de búsqueda sin debounce con filtro *case-insensitive* tipo `icontains`; 
 
 **Cambio pedido aparte:** el corazón de favoritos ahora se pinta relleno en rojo. Ambos trazados salen del icono `uil:heart` —el original y el mismo sin su contorno interior— para que la silueta sea idéntica en los dos estados sin añadir dependencias.
 
-### Fase 5 — Favoritos ⬜
+### Fase 5 — Favoritos ✅
 Página `/favorites` con cabecera, listado desde el store persistido, desmarcado por corazón, estado vacío (`favorites_page_list_of_favorite_pokemons_empty`) y filtros de la Fase 4 integrados.
+
+**Archivos creados**
+
+| Archivo | Contenido |
+| --- | --- |
+| `app/pages/favorites.vue` | Listado filtrado de favoritos y sus estados vacíos |
+| `app/components/layout/AppPageHeader.vue` | Cabecera con flecha de retroceso y título centrado |
+
+**Decisiones de esta fase**
+
+- **Filtrado sin API:** los favoritos guardan sus tipos, así que se filtran en memoria con los mismos predicados que usa el listado general (`app/utils/filters.ts`). No hacen falta peticiones.
+- **Dos estados vacíos distintos:** sin ningún favorito se muestra la interfaz del diseño, y si los filtros no encuentran coincidencias se muestra el aviso de búsqueda sin resultados. La barra de filtros solo aparece cuando hay favoritos que filtrar.
+- **`ClientOnly` en el listado:** los favoritos viven en el navegador, así que el servidor los renderizaría siempre vacíos y provocaría un desajuste al hidratar. Mientras tanto se muestra el loader.
+- **Contenedor más ancho (`max-w-7xl`):** en tres columnas las cards quedaban estrechas y los distintivos de tipos largos, como "Fantasma" y "Veneno", se partían en dos líneas. Ahora las cards se acercan al ancho del diseño original.
+- **Cursor de los botones:** Tailwind v4 dejó de aplicar el cursor de mano en `button`, así que se restaura desde `main.css` para todos a la vez, en lugar de repetir la utilidad en cada componente.
+
+**Verificación en navegador (Chrome, 430 px y 1440 px):** sin favoritos aparece la interfaz del diseño; con cuatro favoritos se listan correctamente; buscar "CHA" deja 1 resultado y el texto concuerda en singular; filtrar por "Fuego" deja solo a Charmeleon; el filtro aplicado se conserva al pasar al listado general, donde devuelve 109 Pokémon de fuego; desmarcar un favorito lo quita del listado y de `localStorage`; al desmarcar el último vuelve la interfaz de lista vacía. `tsc`, `eslint` y `nuxt build` correctos.
 
 ### Fase 6 — Detalle del Pokémon ⬜
 Página `/details/[id]` con la card completa: sprite sobre panel de color, número, nombre, badges, descripción en español, peso, altura, categoría, habilidad, barra de género, debilidades calculadas, botón de favorito, retroceso, loader y estado de error; SEO dinámico con el nombre del Pokémon.
@@ -256,6 +273,6 @@ Revisión de animaciones y transiciones, accesibilidad (foco, `aria-label`, nave
 | 2 | ✅ Completada | 2026-08-12 | Onboarding, middleware global y navegación |
 | 3 | ✅ Completada | 2026-08-12 | Listado, carga progresiva y favoritos |
 | 4 | ✅ Completada | 2026-08-12 | Filtros combinables, recuento y limpieza |
-| 5 | ⬜ Pendiente | — | — |
+| 5 | ✅ Completada | 2026-08-12 | Favoritos con filtros y estados vacíos |
 | 6 | ⬜ Pendiente | — | — |
 | 7 | ⬜ Pendiente | — | — |
