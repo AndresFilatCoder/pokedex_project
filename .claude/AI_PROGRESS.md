@@ -301,6 +301,8 @@ Revisión de animaciones y transiciones, accesibilidad (foco, `aria-label`, nave
 
 **Pendientes conocidos:** los dos `TODO: Add image` de la silueta decorativa del tipo, en la card del listado y en la del detalle.
 
+**Añadido en esta fase:** funcionalidad de copiar en el portapapeles el nombre del Pokémon junto con sus detalles separados por coma desde la card del detalle.
+
 ---
 
 ### Añadido posterior — sonido del Pokémon ✅

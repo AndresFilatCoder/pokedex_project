@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useClipboard } from '~/composables/common/utils'
 import type { PokemonDetailView } from '~/types/pokemon'
 
 const props = defineProps<{ pokemon: PokemonDetailView }>()
@@ -7,6 +8,24 @@ defineEmits<{ back: [] }>()
 
 const primaryType = computed(() => getPrimaryType(props.pokemon.types))
 const displayName = computed(() => formatPokemonName(props.pokemon.name))
+
+const isCopied = ref(false)
+let resetTimeout: ReturnType<typeof setTimeout> | undefined
+
+const share = async () => {
+  try {
+    await useClipboard(buildPokemonShareText(props.pokemon))
+  } catch {
+    // El navegador puede denegar el portapapeles; no se interrumpe la vista.
+    return
+  }
+
+  isCopied.value = true
+  clearTimeout(resetTimeout)
+  resetTimeout = setTimeout(() => (isCopied.value = false), 2000)
+}
+
+onBeforeUnmount(() => clearTimeout(resetTimeout))
 </script>
 
 <template>
@@ -27,8 +46,23 @@ const displayName = computed(() => formatPokemonName(props.pokemon.name))
           @click="$emit('back')"
         />
 
-        <PokemonFavoriteButton :pokemon="pokemon" plain />
+        <div class="flex items-center gap-1">
+          <UButton
+            :icon="isCopied ? 'i-uil-check' : 'i-uil-share-alt'"
+            variant="ghost"
+            size="xl"
+            :aria-label="`Copiar los datos de ${displayName}`"
+            class="rounded-full text-white hover:bg-white/20"
+            @click="share"
+          />
+
+          <PokemonFavoriteButton :pokemon="pokemon" plain />
+        </div>
       </div>
+
+      <p class="sr-only" role="status">
+        {{ isCopied ? 'Datos copiados al portapapeles' : '' }}
+      </p>
 
       <img
         v-if="pokemon.sprite"
