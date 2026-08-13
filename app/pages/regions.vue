@@ -1,5 +1,7 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+useSeoMeta({ title: 'Regiones' })
+</script>
 
 <template>
-  <div></div>
+  <ComingSoon />
 </template>
