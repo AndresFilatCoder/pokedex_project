@@ -14,7 +14,9 @@ withDefaults(
 </script>
 
 <template>
-  <section class="flex w-full flex-col items-center justify-center px-6 py-12 text-center">
+  <section
+    class="flex min-h-[65vh] w-full flex-col items-center justify-center px-6 py-12 text-center"
+  >
     <img :src="image" :alt="imageAlt" class="w-40 max-w-full md:w-48" />
 
     <h2 class="mt-6 max-w-md text-2xl font-bold text-ink md:text-3xl">
