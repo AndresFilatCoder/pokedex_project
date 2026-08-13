@@ -6,6 +6,10 @@ Aplicación web moderna construida con **Nuxt 3** y **Vue 3** que explora el fas
 >
 > Este proyecto fue desarrollado haciendo uso de herramientas de IA, principalmente Claude Code, para asistir en la generación de código, la implementación de funcionalidades y la optimización del proceso de desarrollo, en línea con el enfoque AI-First solicitado en la vacante.
 
+> 🌐 **Link de vercel**
+>
+> https://pokedexprojectvercel.vercel.app/
+
 ---
 
 ## 📦 Tabla de Contenidos
