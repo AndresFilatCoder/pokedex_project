@@ -1,6 +1,11 @@
 import type { LocalizedName } from '~/types/api'
-import type { PokemonDetails, PokemonSummary, PokemonTypeName } from '~/types/pokemon'
-import { API_LANGUAGE, DEFAULT_POKEMON_TYPE } from '~/constants/pokemon'
+import type {
+  PokemonDetailView,
+  PokemonDetails,
+  PokemonSummary,
+  PokemonTypeName
+} from '~/types/pokemon'
+import { API_LANGUAGE, DEFAULT_POKEMON_TYPE, POKEMON_TYPE_LABELS } from '~/constants/pokemon'
 
 /** Extrae el id numérico de una url de recurso: `.../pokemon/25/` -> 25. */
 export const getIdFromResourceUrl = (url: string): number => {
@@ -39,6 +44,32 @@ export const formatCategory = (genus: string): string =>
     .replace(/pok[ée]mon/i, '')
     .trim()
     .toUpperCase()
+
+/**
+ * Resumen del Pokémon en una sola línea para copiar al portapapeles.
+ *
+ * Cada detalle va separado por coma y lleva su etiqueta, porque los valores en
+ * español ya contienen comas decimales ("6,9 kg"). Lo que agrupa varios valores
+ * los une con barra por el mismo motivo.
+ */
+export const buildPokemonShareText = (pokemon: PokemonDetailView): string => {
+  const details = [
+    formatPokemonNumber(pokemon.id),
+    `Tipos: ${pokemon.types.map(type => POKEMON_TYPE_LABELS[type]).join(' / ')}`,
+    `Peso: ${formatWeight(pokemon.weight)}`,
+    `Altura: ${formatHeight(pokemon.height)}`,
+    pokemon.category ? `Categoría: ${pokemon.category}` : '',
+    `Habilidad: ${pokemon.ability}`,
+    pokemon.femaleRatio === null
+      ? ''
+      : `Género: ${formatPercentage(100 - pokemon.femaleRatio)} macho / ${formatPercentage(pokemon.femaleRatio)} hembra`,
+    pokemon.weaknesses.length
+      ? `Debilidades: ${pokemon.weaknesses.map(type => POKEMON_TYPE_LABELS[type]).join(' / ')}`
+      : ''
+  ].filter(Boolean)
+
+  return [formatPokemonName(pokemon.name), ...details].join(', ')
+}
 
 /** Normaliza texto para búsquedas insensibles a mayúsculas y acentos. */
 export const normalizeText = (value: string): string =>
